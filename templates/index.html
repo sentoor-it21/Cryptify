@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRYPTIFY</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet" />
+        <style>
+            .google-button {
+              display: inline-flex;
+              align-items: center;
+              padding: 10px 20px;
+              background-color: transparent;
+              border: 2px solid #4285F4;
+              color: #4285F4;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+              font-family: Arial, sans-serif;
+              font-size: 14px;
+            }
+        
+            .google-button:hover {
+              background-color: rgba(66, 133, 244, 0.1);
+            }
+        
+            .google-logo {
+              width: 20px;
+              height: 20px;
+              margin-right: 10px;
+              background-image: url('your-google-logo-url.png'); /* Replace with your image URL */
+              background-size: cover;
+              display: inline-block;
+            }
+            body {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .explore {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 80px 0;
+            }
+
+            .explore-content {
+                flex: 1;
+                padding-right: 40px;
+            }
+
+            .cipher {
+                display: block;
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 10px;
+                text-decoration: none;
+            }
+
+            .line {
+                width: 50px;
+                height: 3px;
+                background-color: #333;
+                margin-bottom: 20px;
+            }
+
+            .paragraphs {
+                margin-bottom: 20px;
+            }
+
+            .paragraphs p {
+                margin-bottom: 10px;
+                font-size: 16px;
+                color: #666;
+            }
+
+            .video-container {
+                flex: 1;
+                max-width: 50%;
+            }
+
+            .video-container video {
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+          </style>
+        
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1 class="logo">CRYPTIFY</h1>
+        <img src="{{ url_for('static', filename='img/menu-btn.png') }}" alt="" class="menu-btn">
+    </nav>
+    <header>
+        <video autoplay loop muted plays-inline class="back-video">
+            <source src="{{ url_for('static', filename='img/video.mp4') }}" type="video/mp4">
+        </video>
+        <div class="header-content">
+            <h2>Encrypt and decrypt everything!!</h2>
+            <div class="line"></div>
+            <h1>with CRYPTIFY</h1>
+        </div>
+    </header>
+    
+    <section id="abt" class="events">
+        <div class="tlt">
+            
+            <div class="container">
+                <span class="text first-text">Encrypt and decrypt</span>
+                <span class="text sec-text">Freelancer</span>
+            </div>
+            
+            <div class="line"></div>
+
+            <a href="/login">
+                <button class="google-button">
+                    <img class="google-logo" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="Google Logo">
+                    Sign in with Google
+                  </button>
+            </a>
+    </section>
+
+    <section id="exp" class="explore">
+        <div class="explore-content">
+            <a href="#exp" class="cipher">World of CIPHER</a>
+            <div class="line"></div>
+            <div class="paragraphs">
+                <p>Unlock the power of encryption! Our user-friendly tool lets individuals, businesses, and organizations safeguard their sensitive data effortlessly.</p>
+                <p>Secure files and conversations with encryption and decryption features, ensuring protection against data breaches and unauthorized access.</p>
+                <p>Experience the future with ECC-based encryption, a reliable solution for secure communication, data storage, and digital signatures.</p>
+            </div>
+        </div>
+        <div class="video-container">
+            <video autoplay loop muted playsinline>
+                <source src="{{ url_for('static', filename='/img/CRYPTIFY.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+    </section>
+
+
+
+    <section class="footer">
+        <p>&copy; 2023 Team Techno</p>
+    </section>
+    
+    <script>
+        // JavaScript code to update the displayed values
+function updateKeys(publicKeyX, publicKeyY, privateKey) {
+    document.getElementById('public-key-x').textContent = publicKeyX;
+    document.getElementById('public-key-y').textContent = publicKeyY;
+    document.getElementById('private-key').textContent = privateKey;
+    document.getElementById('key-info').style.display = 'block';
+}
+
+function copyToClipboard(publicKeyX, publicKeyY, privateKey) {
+    var combinedValue = "Public Key X: " + publicKeyX + "\n" + "Public Key Y: " + publicKeyY + "\n" + "Private Key: " + privateKey;
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = combinedValue;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    alert("Key values copied to clipboard.");
+}
+    </script>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn')
+        const navlinks = document.querySelector('.nav-links')
+        menuBtn.addEventListener('click', () => {
+            navlinks.classList.toggle('mobile-menu')
+        })
+        const text = document.querySelector(".sec-text");
+        const textLoad = () => {
+            setTimeout(() => {
+                text.textContent = "text";
+            }, 0);
+            setTimeout(() => {
+                text.textContent = "image";
+            }, 2000);
+            setTimeout(() => {
+                text.textContent = "audio";
+            }, 4000); //1s = 1000 milliseconds
+            setTimeout(() => {
+                text.textContent = "video";
+            }, 6000);
+            setTimeout(() => {
+                text.textContent = "file";
+            }, 8000);
+            setTimeout(() => {
+                text.textContent = "everything";
+            }, 10000);
+        }
+        textLoad();
+        setInterval(textLoad, 10000);
+    </script>
+
+</body>
+
+</html>

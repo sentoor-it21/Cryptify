@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .logo {
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: transparent;
+            border: 2px solid #4285F4;
+            color: #4285F4;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(66, 133, 244, 0.1);
+        }
+
+        .menu-btn {
+            width: 30px;
+            height: 30px;
+        }
+
+        .custom-form-card {
+            width: 60%;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        .custom-form-heading {
+            font-size: 24px;
+            font-family: 'Bebas Neue', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .custom-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .custom-form .btn-primary {
+            width: 40%; /* Increase button width to 40% */
+            background-color: #4285F4;
+            border-color: #4285F4;
+            transition: background-color 0.3s;
+            display: block; /* Ensures the button takes up the full width of its container */
+            margin: 0 auto; /* Centers the button horizontally */
+            background-color: transparent;
+            border: 2px solid #4285F4;
+            color: #4285F4;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .custom-form .btn-primary:hover {
+            background-color: rgba(66, 133, 244, 0.1);
+        }
+
+        .footer {
+            background-color: #484872;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        #resultContainer {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        #result {
+            margin: 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h1 class="logo">CRYPTIFY</h1>
+        <a href="/logout" class="logout-btn">B A C K</a>
+    </nav>
+
+        <div class="custom-form-card">
+            <h2 class="custom-form-heading">VIDEO ENCRYPTION AND DECRYPTION</h2>
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('video_page') }}"
+                onsubmit="return validateForm()">
+
+                <div class="form-row">
+                
+                    <div class="form-group col-md-6">
+                        <select id="username" name="username" class="form-control">
+                            <option value="" selected>Select a user</option>
+                        {% for user in users %}
+                            <option value="{{ user.username }}">{{ user.username }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+    
+                    <div class="form-group col-md-6">
+                        <select id="choice" name="choice" class="form-control">
+                            <option value="" selected>Choose an option</option>
+                            <option value="1">Encrypt</option>
+                            <option value="2">Decrypt</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="file" id="input_video" name="input_video" accept=".mp4, .mov, .mkv, .avi"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <small id="file-warning" class="form-text-text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="pub_keyX" name="pub_keyX" placeholder="Public Key X">
+                </div>
+    
+                <div class="form-group">
+                    <input type="text" class="form-control" id="pub_keyY" name="pub_keyY" placeholder="Public Key Y">
+                </div> 
+
+                <button type="submit" class="btn btn-primary">S U B M I T</button>
+
+                {% if encrypt_success or decrypt_success %}
+                <div class="message success">
+                    {% if encrypt_success %}
+                    {{ encrypt_message }}
+                    {% else %}
+                    {{ decrypt_message }}
+                    {% endif %}
+                </div>
+                <div class="download-link">
+                    <a href="{{ url_for('video_page') }}" class="download-button" download>Download Processed Video</a>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2023 Team Techno</p>
+        </div>
+
+    <script>
+                    $(document).ready(function () {
+            // Fetch the list of users and populate the dropdown
+            $.ajax({
+                type: 'GET',
+                url: '/get_users',
+                success: function (response) {
+                    var dropdown = $('#username');
+                    dropdown.empty();
+                    $.each(response, function (index, user) {
+                        dropdown.append($('<option></option>').attr('value', user).text(user));
+                    });
+                }
+            });
+
+            // Fetch the selected user's public keys
+            $('#username').on('change', function () {
+                var selectedUser = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/get_public_keys',
+                    data: { username: selectedUser },
+                    success: function (response) {
+                        $('#pub_keyX').val(response.public_key_x);
+                        $('#pub_keyY').val(response.public_key_y);
+                    }
+                });
+            });
+        });
+        function validateForm() {
+            var inputVideo = document.getElementById('input_video');
+            var fileWarning = document.getElementById('file-warning');
+            var allowedFormats = ['.mp4', '.mkv', '.avi', '.mov'];
+
+            var fileName = inputVideo.value;
+            var fileExtension = fileName.substr(fileName.lastIndexOf('.')).toLowerCase();
+
+            if (allowedFormats.indexOf(fileExtension) === -1) {
+                fileWarning.textContent = 'Invalid file format. Please select a video in .mp4, .mov, .avi, .mkv format.';
+                return false;
+            } else {
+                fileWarning.textContent = '';
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

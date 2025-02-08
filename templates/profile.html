@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Profile | CRYPTIFY</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+    background-color: white;
+}
+
+.navbar {
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+.logo {
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.logout-btn {
+              display: inline-flex;
+              align-items: center;
+              padding: 10px 20px;
+              background-color: transparent;
+              border: 2px solid #4285F4;
+              color: #4285F4;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+              font-family: Arial, sans-serif;
+              font-size: 14px;
+            }
+        
+            .logout-btn:hover {
+              background-color: rgba(66, 133, 244, 0.1);
+            }
+
+.menu-btn {
+    width: 30px;
+    height: 30px;
+}
+
+.profile-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://media1.giphy.com/media/WS0CLDl6fVObKCEDQa/giphy.gif'); /* Background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; /* Center the background image */
+    border-radius: 15px;
+    padding: 20px;
+    margin: 100px auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s;
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.profile-pic-container:hover .profile-pic {
+    transform: scale(1.2); /* Enlarge the profile pic on hover */
+}
+
+.profile-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    transition: opacity 0.3s;
+    opacity: 0; /* Initially hidden */
+}
+
+.profile-pic-container:hover .profile-details {
+    opacity: 1; /* Show on hover */
+}
+
+.explore {
+            background-color: white; /* Set background color to white */
+        }
+
+        .explore-content {
+            width: 30%; /* Adjust width to 30% */
+            margin: auto;
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .logged-in-info {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4285F4; /* Set attractive color */
+        }
+
+        .username-email-container {
+            color: #EA4335; /* Set bright color */
+            font-family: Arial, sans-serif; /* Similar to logout button font */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .paragraphs {
+            color: #333; /* Set text color */
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .generate-key-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4285F4;
+            color: white;
+            font-family: Arial, sans-serif; /* Similar to logout button font */
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .generate-key-btn:hover {
+            background-color: #1976D2; /* Darker shade on hover */
+        }
+
+        .card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-content h3 {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.ctn {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #4285F4;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.ctn:hover {
+    background-color: #357AE8;
+}
+
+.gap {
+    height: 20px; /* Adjust the height as needed */
+}
+
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+    </style>
+</head>
+
+
+<body>
+    
+    <nav class="navbar">
+        <h1 class="logo">CRYPTIFY</h1>
+        <a href="/logout" class="logout-btn">L O G O U T</a>
+        <img src="{{ url_for('static', filename='img/menu-btn.png') }}" alt="" class="menu-btn">
+    </nav>
+
+    <div class="profile-card">
+        <div class="profile-content">
+            <div class="profile-pic-container">
+                <img src="{{ profile_picture_url }}" alt="Profile Picture" class="profile-pic">
+            </div>
+        </div>
+    </div>
+
+    <section id="exp" class="explore">
+        <div class="explore-content">
+            <h2 class="logged-in-info">G I V E - a - T R Y 👇</h2>
+            <div class="username-email-container">
+                <p class="username" style="color: limegreen;">{{ username }}</p>
+            </div>
+            <div class="line"></div>
+            <div class="paragraphs">
+                Experience the future with ECC-based encryption, a reliable solution for secure communication, data storage, and digital signatures.
+            </div>
+            <div class="gap"></div> <!-- Add a div for creating a gap -->
+            <a href="{{ url_for('generate_key_pair') }}" class="logout-btn">G E N E R A T E - K E Y S</a>
+        </div>
+        <div class="video-container">
+            <img src="https://images.squarespace-cdn.com/content/v1/5769fc401b631bab1addb2ab/1541580611624-TE64QGKRJG8SWAIUS7NS/ke17ZwdGBToddI8pDm48kPoswlzjSVMM-SxOp7CV59BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PI6FXy8c9PWtBlqAVlUS5izpdcIXDZqDYvprRqZ29Pw0o/coding-freak.gif" alt="GIF">
+        </div>
+    </section>
+    
+
+
+    <section id="abt" class="events">
+        <div class="tlt">
+            <div class="container">
+                <span class="text first-text">Encrypt and decrypt</span>
+                <span class="text sec-text">Freelancer</span>
+            </div>
+        <div class="line"></div>
+            
+        <div class="row">
+            <div class="col">
+                <img src="{{ url_for('static', filename='img/message.jpg') }}" alt="">
+                <div class="info">
+                    <h1>TEXT CRYPT</h1>
+                    <a href="{{ url_for('text_page1') }}" class="ctn">Try now</a>
+                </div>
+            </div>
+            <div class="col">
+                <img src="{{ url_for('static', filename='/img/image1.jpg') }}" alt="">
+                <div class="info">
+                    <h1>IMAGE CRYPT</h1>
+
+                    <a href="{{ url_for('image_page1') }}" class="ctn">Try now</a>
+                </div>
+            </div>
+            <div class="col">
+                <img src="{{ url_for('static', filename='/img/audio.jpg') }}" alt="">
+                <div class="info">
+                    <h1>AUDIO CRYPT</h1>
+
+                    <a href="{{ url_for('audio_page') }}" id="audio_page" class="ctn">Try now</a>
+                </div>
+            </div>
+            <div class="col">
+                <img src="{{ url_for('static', filename='/img/video.jpg') }}" alt="">
+                <div class="info">
+                    <h1>VIDEO CRYPT</h1>
+
+                    <a href="{{ url_for('video_page1') }}" class="ctn">Try now</a>
+                </div>
+            </div>
+            <div class="col">
+                <img src="{{ url_for('static', filename='/img/file.jpg') }}" alt="">
+                <div class="info">
+                    <h1>FILE CRYPT</h1>
+                    <a href="{{ url_for('file_page') }}" class="ctn">Try now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>&copy; 2023 Team Techno</p>
+    </div>
+
+</body>
+
+<script>
+    const menuBtn = document.querySelector('.menu-btn')
+    const navlinks = document.querySelector('.nav-links')
+    menuBtn.addEventListener('click', () => {
+        navlinks.classList.toggle('mobile-menu')
+    })
+    const text = document.querySelector(".sec-text");
+    const textLoad = () => {
+        setTimeout(() => {
+            text.textContent = "text";
+        }, 0);
+        setTimeout(() => {
+            text.textContent = "image";
+        }, 2000);
+        setTimeout(() => {
+            text.textContent = "audio";
+        }, 4000); //1s = 1000 milliseconds
+        setTimeout(() => {
+            text.textContent = "video";
+        }, 6000);
+        setTimeout(() => {
+            text.textContent = "file";
+        }, 8000);
+        setTimeout(() => {
+            text.textContent = "everything";
+        }, 10000);
+    }
+    textLoad();
+    setInterval(textLoad, 10000);
+</script>
+
+
+</html>
+
